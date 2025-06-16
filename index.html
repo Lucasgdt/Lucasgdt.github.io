@@ -1,13 +1,48 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Goudet Lucas – Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Monoton&display=swap" rel="stylesheet" rel="stylesheet" />
   </head>
+
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <!-- === FRAME FIXE : identité + navigation + animation === -->
+<div class="frame-wrapper">
+  <div class="fixed-frame">
+      <!-- Fond animé : Canvas ou div -->
+      <canvas id="bg-canvas"></canvas>
+
+      <!-- Titre haut gauche -->
+      <div class="header-info">
+        <h1>Goudet Lucas</h1>
+        <p>Fullstack Developer</p>
+      </div>
+
+      <!-- Navigation droite -->
+      <nav class="main-nav">
+        <ul>
+          <li><a href="#" data-section="about">ABOUT</a></li>
+          <li><a href="#" data-section="projects">PROJECTS</a></li>
+          <li><a href="#" data-section="contact">CONTACT</a></li>
+        </ul>
+      </nav>
+
+      <!-- Light / Dark Mode boutons en bas à droite -->
+      <div class="theme-toggle">
+        <button disabled>LIGHT</button>
+        <button disabled>DARK</button>
+      </div>
+    </div>
+</div>
+
+    <!-- === CONTENEUR DYNAMIQUE : contenu injecté === -->
+    <main id="dynamic-container">
+      <!-- Le contenu des sections about/projects/contact viendra ici -->
+    </main>
+
+    <script src="script.js"></script>
   </body>
 </html>

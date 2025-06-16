@@ -1,0 +1,188 @@
+/* Typo principale */
+@import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Monoton&display=swap');
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #111;
+  --frame-color: rgb(255, 255, 255);
+  --accent-color: #333;
+  --font-family: 'Cutive Mono', monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  height: 100%;
+  overflow: hidden; /* le scroll est géré dans #dynamic-container */
+}
+
+/* === FRAME FIXE === */
+/* Conteneur centré */
+.frame-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-color); /* pour que le fond entoure la frame */
+  overflow: hidden;
+  position: relative;
+}
+
+/* La vraie frame visuelle */
+.fixed-frame {
+  position: relative;
+  width: 90vw;
+  height: 90vh;
+  background-color: var(--frame-color);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.8); /* trait extérieur */
+  overflow: hidden;
+  z-index: 10;
+}
+
+
+.fixed-frame > * {
+  pointer-events: auto; /* réactive les clics sur les vrais éléments */
+}
+
+/* Canvas animé */
+#bg-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  opacity: 0.15;
+  background: transparent;
+}
+
+/* Haut gauche : Nom + Titre */
+.header-info {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  z-index: 2;
+}
+
+.header-info h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.header-info p {
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+  opacity: 0.7;
+}
+
+/* Navigation droite : ABOUT / PROJECTS / CONTACT */
+.main-nav {
+  position: absolute;
+  top: 20rem;
+  right: 3.5rem;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  gap: 2rem;
+}
+
+.main-nav a {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+  transition: transform 0.2s ease, color 0.2s ease, letter-spacing 0.2s ease;
+}
+
+.main-nav a:hover {
+    /* Augmentation de la taille au survol progressive et simulation de mise en italic*/
+  transform: scale(1.1) skewX(-10deg);
+  /* Changement de couleur au survol */
+  color: var(--accent-color);
+  letter-spacing: 1.5px;
+}
+
+/* Boutons LIGHT/DARK en bas à droite */
+.theme-toggle {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 2;
+}
+
+.theme-toggle button {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  background: none;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+  font-size: 0.7rem;
+  padding: 0.4rem 0.2rem;
+  cursor: not-allowed; /* car désactivé pour le moment */
+  opacity: 0.4;
+}
+
+/* === CONTENU DYNAMIQUE === */
+#dynamic-container {
+  position: relative;
+  z-index: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 2rem;
+  scroll-behavior: smooth;
+}
+
+/* Style de base pour le contenu injecté */
+#dynamic-container section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-bottom: 6rem;
+}
+
+/* === Responsive mobile === */
+@media (max-width: 768px) {
+  .main-nav a {
+    font-size: 1.2rem;
+  }
+
+  .header-info h1 {
+    font-size: 1rem;
+  }
+
+  .theme-toggle {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .main-nav {
+    right: 1rem;
+  }
+
+  .header-info {
+    left: 1rem;
+    top: 1rem;
+  }
+
+  #dynamic-container {
+    padding: 1.5rem;
+  }
+}
