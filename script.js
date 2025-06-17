@@ -1,29 +1,38 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const links = document.querySelectorAll(".main-nav a[data-section]");
-  const contentContainer = document.getElementById("dynamic-container");
+// Ajoute ce script en bas de ton <body>, ou dans un fichier JS lié
+document.addEventListener('DOMContentLoaded', function () {
+  const menu = document.getElementById('menu-overlay');
+  const burger = document.getElementById('burger');
+  const closeMenu = document.getElementById('close-menu');
+  const menuLinks = menu.querySelectorAll('a[data-page]');
+  const pages = document.querySelectorAll('.page');
 
-  // Fonction pour charger une section
-  const loadSection = async (section) => {
-    try {
-      const res = await fetch(`sections/${section}.html`);
-      if (!res.ok) throw new Error("Section introuvable");
-      const html = await res.text();
-      contentContainer.innerHTML = html;
-    } catch (err) {
-      contentContainer.innerHTML = `<p>Erreur : ${err.message}</p>`;
-    }
-  };
+  // Ouvre le menu
+  burger.addEventListener('click', function () {
+    menu.classList.add('open');
+  });
 
-  // Gérer les clics sur les liens
-  links.forEach((link) => {
-    link.addEventListener("click", (e) => {
+  // Ferme le menu
+  closeMenu.addEventListener('click', function () {
+    menu.classList.remove('open');
+  });
+
+  // Quand on clique sur un lien de menu overlay
+  menuLinks.forEach(link => {
+    link.addEventListener('click', function (e) {
       e.preventDefault();
-      const section = link.dataset.section;
-      loadSection(section);
+      const page = this.getAttribute('data-page');
+      showPage(page);
+      menu.classList.remove('open');
     });
   });
 
-  // Charger "home" par défaut
-  loadSection("home");
-  console.log("Chargement de la home...");
+  function showPage(pageName) {
+    pages.forEach(section => {
+      section.style.display = section.getAttribute('data-page') === pageName ? 'block' : 'none';
+    });
+    // Mettre à jour l'état "is-selected" dans le header
+    navLinks.forEach(link => {
+      link.parentElement.classList.toggle('is-selected', link.getAttribute('data-page') === pageName);
+    });
+  }
 });

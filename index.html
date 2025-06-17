@@ -1,48 +1,73 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Goudet Lucas – Portfolio</title>
-    <link rel="stylesheet" href="style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <title>Mon Portfolio</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- Fonts personnalisées à ajouter ici si tu veux -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Canvas animé en fond -->
+  <div id="Background">
+    <canvas id="bg-canvas"></canvas>
+  </div>
 
-  <body>
-    <!-- === FRAME FIXE : identité + navigation + animation === -->
-    <div class="frame-wrapper">
-      <div class="fixed-frame">
-      <!-- Fond animé : Canvas ou div -->
-        <canvas id="bg-canvas"></canvas>
+  <!-- Rectangle cadre -->
+  <div class="frame">
+    <div class="frame_line frame_line-left"></div>
+    <div class="frame_line frame_line-right"></div>
+    <div class="frame_line frame_line-top"></div>
+    <div class="frame_line frame_line-bottom"></div>
+    <!-- Ajoute un bouton hamburger -->
+    <button id="burger" aria-label="Ouvrir le menu" class="burger-btn">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </button>
 
-      <!-- Titre haut gauche -->
-        <div class="header-info">
-          <h1>Goudet Lucas</h1>
-          <p>Fullstack Developer</p>
-        </div>
+    <!-- Pages, une seule visible à la fois -->
+    <main class="content">
+        <section class="page" data-page="home" style="display: block;">
+            <div class="page_content home">
+                <p class="home_aboutme">
+                <span>Bienvenue sur mon portfolio</span>
+                <span>Je suis designer & développeur</span>
+                <span>J’aime créer des expériences web uniques</span>
+                </p>
+            </div>
+        </section>
+        <section class="page" data-page="about" style="display: none;">
+            <div class="page_content about">
+                <p>À propos de moi...</p>
+            </div>
+        </section>
+        <!-- Ajoute ici les autres pages -->
+  </main>
 
-      <!-- Navigation droite -->
-        <nav class="main-nav">
-          <ul>
-            <li><a href="#" data-section="home">HOME</a></li>
-            <li><a href="#" data-section="about">ABOUT</a></li>
-            <li><a href="#" data-section="projects">PROJECTS</a></li>
-            <li><a href="#" data-section="contact">CONTACT</a></li>
-          </ul>
-        </nav>
-        <!-- === CONTENEUR DYNAMIQUE : contenu injecté === -->
-        <main id="dynamic-container">
-          <!-- Le contenu des sections about/projects/contact viendra ici -->
-        </main>      
+  </div>
+  <!-- ... -->
+<header class="siteHeader">
+  <h1 class="siteHeader_title">Ton Nom</h1>
+  <p class="siteHeader_label">Designer & Développeur</p>
+</header>
 
-      <!-- Light / Dark Mode boutons en bas à droite 
-      <div class="theme-toggle">
-        <button disabled>LIGHT</button>
-        <button disabled>DARK</button>
-      </div> -->
-      </div>
-    </div>
+<!-- Menu overlay -->
+<div id="menu-overlay" class="menu-overlay">
+  <div class="menu-content">
+    <nav>
+      <ol>
+        <li><a href="/" data-page="home">Home</a></li>
+        <li><a href="/about" data-page="about">À propos</a></li>
+        <li><a href="/projects" data-page="projects">Projets</a></li>
+        <li><a href="/contact" data-page="contact">Contact</a></li>
+      </ol>
+    </nav>
+    <button id="close-menu" aria-label="Fermer le menu">Fermer ✕</button>
+  </div>
+</div>
 
-    <script src="script.js"></script>
-  </body>
+</body>
 </html>
+<script src="script.js"></script>

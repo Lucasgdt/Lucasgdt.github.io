@@ -1,191 +1,291 @@
-/* Typo principale */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-
+/* --- Base couleurs et font --- */
 :root {
-  --bg-color: #ffffff;
-  --text-color: #111;
-  --frame-color: rgb(255, 255, 255);
-  --accent-color: #505050;
-  --font-family: 'Playfair Display', serif;
+  --c-bg: #000000;
+  --c-text: #ffffff;
+  --pad: 40px;
+  --accent: #a8a8a8;
+  --fs-title: 2.5rem;
 }
-
-* {
+body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: 'Neue Montreal', Arial, sans-serif;
+  min-height: 100vh;
 }
-
-html, body {
-  font-family: var(--font-family);
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  height: 100%;
-  overflow: hidden; /* le scroll est géré dans #dynamic-container */
-}
-
-/* === FRAME FIXE === */
-/* Conteneur centré */
-.frame-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100vw;
-  background-color: var(--bg-color); /* pour que le fond entoure la frame */
-  overflow: hidden;
-  position: relative;
-}
-
-/* La vraie frame visuelle */
-.fixed-frame {
-  position: relative;
-  width: 90vw; 
-  height: 90vh; 
-  background-color: var(--frame-color);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.8); /* trait extérieur */
-  overflow: hidden;
-  z-index: 10;
-}
-
-
-.fixed-frame > * {
-  pointer-events: auto; /* réactive les clics sur les vrais éléments */
-}
-
-/* Canvas animé */
-#bg-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
+#Background {
+  position: fixed;
   z-index: 1;
-  width: 100%;
-  height: 100%;
-  opacity: 0.15;
+  left: 0; top: 0; right: 0; bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+#bg-canvas {
+  width: 100vw; height: 100vh; display: block;
   background: transparent;
 }
 
-/* Haut gauche : Nom + Titre */
-.header-info {
+/* --- Cadre rectangle animé */
+.frame {
+  position: fixed;
+  z-index: 10;
+  left: var(--pad); right: var(--pad);
+  top: var(--pad); bottom: var(--pad);
+  pointer-events: auto;
+  mix-blend-mode: difference;
+}
+.frame_line {
   position: absolute;
-  top: 2rem;
-  left: 2rem;
-  z-index: 2;
+  background: #ffffff;
+  opacity: 0.5;
+  transition: opacity 0.6s;
 }
+.frame_line-left   { left: 0; top: 0; width: 1px; height: 100%; }
+.frame_line-right  { right: 0; top: 0; width: 1px; height: 100%; }
+.frame_line-top    { left: 0; top: 0; width: 100%; height: 1px; }
+.frame_line-bottom { left: 0; bottom: 0; width: 100%; height: 1px; }
 
-.header-info h1 {
-  font-size: 2.5rem;
-  font-weight: 400;
-  letter-spacing: 1.5px;
-}
-
-.header-info p {
-  font-size: 0.9rem;
-  margin-top: 0.4rem;
-  opacity: 0.7;
-}
-
-/* Navigation droite : ABOUT / PROJECTS / CONTACT */
-.main-nav {
-  position: absolute;
-  top: 25rem;
-  right: 3.5rem;
-  transform: translateY(-50%);
-  z-index: 2;
-}
-
-.main-nav ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  text-align: right;
-  gap: 2rem;
-}
-
-.main-nav a {
-  display: inline-block;
-  text-decoration: none;
-  font-size: 3.5rem;
-  font-weight: bold;
-  color: var(--text-color);
-  transition: transform 0.2s ease, color 0.2s ease, letter-spacing 0.2s ease;
-}
-
-.main-nav a:hover {
-  /* Augmentation de la taille au survol progressive et simulation de mise en italic*/
-  transform: scale(1.1) skewX(-10deg);
-  /* Changement de couleur au survol */
-  color: var(--accent-color);
-  letter-spacing: 1.5px;
-}
-
-/* Boutons LIGHT/DARK en bas à droite */
-.theme-toggle {
-  position: absolute;
-  bottom: 2rem;
-  left: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  z-index: 2;
-}
-
-.theme-toggle button {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
+.burger-btn {
+  width: 40px;
+  height: 40px;
   background: none;
-  border: 1px solid var(--text-color);
-  color: var(--text-color);
-  font-size: 0.7rem;
-  padding: 0.4rem 0.2rem;
-  cursor: not-allowed; /* car désactivé pour le moment */
-  opacity: 0.4;
-}
-
-/* === CONTENU DYNAMIQUE === */
-#dynamic-container {
+  border: none;
   position: absolute;
-  /* top: 13rem;         /* laisse de l'espace sous le titre */
-  left: 2.5rem;        /* décalé du bord gauche */
-  right: 50%;       /* décalé du bord droit */
-  bottom: 6rem;
-  overflow-y: auto;
-  padding-right: 1rem;
-  z-index: 2;
+  top: 3%;
+  right: 3%;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  z-index: 11;
+  pointer-events: auto;
+}
+
+.burger-btn .bar {
+  display: block;
+  width: 30px;
+  height: 4px;
+  background: #fff;
+  border-radius: 2px;
+  transition: 
+    transform 0.3s cubic-bezier(.76,0,.24,1),
+    width 0.3s cubic-bezier(.76,0,.24,1),
+    background 0.3s;
+}
+
+/* --- Animation au hover --- */
+.burger-btn:hover .bar:nth-child(1) {
+    transform: translateY(10px) rotate(270deg);
+    width: 30px;
+}
+.burger-btn:hover .bar:nth-child(2) {
+    transform: translate3d(10px, 10px, 0) scale3d(0.3, 2, 0.3);
+
+}
+.burger-btn:hover .bar:nth-child(3) {
+    transform: translateY(-12px) rotate(-180deg);
+    width: 30px;
+}
+
+*/
+.frame > #burger svg rect { fill: #fff; }
+@media (max-width: 600px) {
+  .frame > #burger { right: 0; }
+  .siteHeader { left: var(--pad); }
+}
+
+/* --- Header façon Charles, inspiré Keita --- */
+.siteHeader {
+  position: fixed;
+  z-index: 11;
+  left: calc(var(--pad)*2);
+  top: calc(var(--pad)*2);
+  mix-blend-mode: difference;
+  color: #fff;
+}
+.siteHeader_title {
+  margin: 0 0 0.2em 0;
+  font-size: var(--fs-title);
+  font-weight: 600;
+}
+.siteHeader_label {
+  margin: 0 0 1em 0;
+  font-weight: 400;
+}
+.siteHeader_nav ol {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 0;
+}
+.siteHeader_nav li {
+  list-style: none;
+  position: relative;
+}
+.siteHeader_nav ._dot {
+  position: absolute; left: -20px; top: 2px; font-size: 10px; opacity: 0;
+  transition: opacity 0.3s;
+}
+.siteHeader_nav li.is-selected ._dot {
+  opacity: 1;
+}
+.siteHeader_nav ._text {
+  color: inherit;
+  text-decoration: none;
+  font-size: 1.15em;
+  opacity: 1;
+  transition: opacity 0.4s;
+}
+.siteHeader_nav li.is-selected ._text {
+  opacity: 0.3;
+  pointer-events: none;
+}
+.siteHeader_nav ._text:hover {
+  opacity: 0.25;
+}
+
+/* --- Pages --- */
+.content {
+     position: fixed;
+     z-index: 20;
+    left: calc(var(--pad) + 10px);
+    bottom: calc(var(--pad) + 10px);
+    max-width: 40vw;   /* large sur desktop */
+     min-width: 220px;  /* jamais trop petit */
+    height: 60vh;  /* évite de dépasser le cadre */
+    padding: 1.2em 1.5em;
+     border-radius: 18px;
+    box-shadow: 0 4px 24px 0 rgba(40,40,50,0.06);
+    color: var(--c-text, #222);
+     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.7em;
+    transition: max-width 0.2s, max-height 0.2s;
+}
+
+.page_content.home {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
 
-/* Style de base pour le contenu injecté */
-#dynamic-container section {
-  max-width: 800px;
-  margin: 0 auto;
-  padding-bottom: 6rem;
-}
-
-/* === Responsive mobile === */
-@media (max-width: 768px) {
-  .main-nav a {
-    font-size: 1.2rem;
-  }
-
-  .header-info h1 {
+/* RESPONSIVE : Tablette et mobile */
+@media (max-width: 900px) {
+  .content {
+    max-width: 80vw;
+    min-width: 150px;
+    max-height: 38vh;
     font-size: 1rem;
+    padding: 1em;
   }
+  .page_content.home h2 { font-size: 1.45rem; }
+}
 
-  .theme-toggle {
-    bottom: 1rem;
-    right: 1rem;
+@media (max-width: 600px) {
+  .content {
+    left: 5vw;
+    bottom: 5vw;
+    max-width: 90vw;
+    min-width: 90vw;
+    max-height: 40vh;
+    font-size: 0.99rem;
+    padding: 0.95em;
+    border-radius: 12px;
   }
+  .page_content.home h2 { font-size: 1.1rem; }
+}
 
-  .main-nav {
-    right: 1rem;
-  }
-
-  .header-info {
-    left: 1rem;
-    top: 1rem;
-  }
-
-  #dynamic-container {
-    padding: 1.5rem;
+/* Optionnel : pour éviter que le contenu sorte du cadre si la fenêtre est trop petite */
+@media (max-height: 500px) {
+  .content {
+    max-height: 30vh;
   }
 }
+
+.page {
+  display: none;
+  width: 100%;
+  min-height: 50vh;
+  align-items: center; justify-content: center;
+  text-align: left;
+}
+.page[data-page="home"] {
+  display: block;
+}
+.home_aboutme span {
+  display: block;
+  font-size: 1.3rem;
+  margin: 0.5em 0;
+}
+/* --- Overlay menu façon Charles Bruyerre --- */
+.menu-overlay {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  background: rgba(34, 34, 34, 0.92);
+  color: #fff;
+  display: none; /* caché par défaut */
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s;
+}
+
+.menu-overlay.open {
+  display: flex;
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.menu-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2em;
+}
+
+.menu-content nav ol {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.menu-content nav a {
+  font-size: 2.2rem;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.menu-content nav a:hover {
+  color: var(--accent);
+}
+
+#close-menu {
+  margin-top: 2em;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+#close-menu:hover {
+  opacity: 1;
+}
+
