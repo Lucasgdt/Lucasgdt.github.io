@@ -5,43 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Goudet Lucas – Portfolio</title>
     <link rel="stylesheet" href="style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Monoton&display=swap" rel="stylesheet" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
   </head>
 
   <body>
     <!-- === FRAME FIXE : identité + navigation + animation === -->
-<div class="frame-wrapper">
-  <div class="fixed-frame">
+    <div class="frame-wrapper">
+      <div class="fixed-frame">
       <!-- Fond animé : Canvas ou div -->
-      <canvas id="bg-canvas"></canvas>
+        <canvas id="bg-canvas"></canvas>
 
       <!-- Titre haut gauche -->
-      <div class="header-info">
-        <h1>Goudet Lucas</h1>
-        <p>Fullstack Developer</p>
-      </div>
+        <div class="header-info">
+          <h1>Goudet Lucas</h1>
+          <p>Fullstack Developer</p>
+        </div>
 
       <!-- Navigation droite -->
-      <nav class="main-nav">
-        <ul>
-          <li><a href="#" data-section="about">ABOUT</a></li>
-          <li><a href="#" data-section="projects">PROJECTS</a></li>
-          <li><a href="#" data-section="contact">CONTACT</a></li>
-        </ul>
-      </nav>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="#" data-section="home">HOME</a></li>
+            <li><a href="#" data-section="about">ABOUT</a></li>
+            <li><a href="#" data-section="projects">PROJECTS</a></li>
+            <li><a href="#" data-section="contact">CONTACT</a></li>
+          </ul>
+        </nav>
+        <!-- === CONTENEUR DYNAMIQUE : contenu injecté === -->
+        <main id="dynamic-container">
+          <!-- Le contenu des sections about/projects/contact viendra ici -->
+        </main>      
 
-      <!-- Light / Dark Mode boutons en bas à droite -->
+      <!-- Light / Dark Mode boutons en bas à droite 
       <div class="theme-toggle">
         <button disabled>LIGHT</button>
         <button disabled>DARK</button>
+      </div> -->
       </div>
     </div>
-</div>
-
-    <!-- === CONTENEUR DYNAMIQUE : contenu injecté === -->
-    <main id="dynamic-container">
-      <!-- Le contenu des sections about/projects/contact viendra ici -->
-    </main>
 
     <script src="script.js"></script>
   </body>
