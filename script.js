@@ -10,27 +10,20 @@ document.addEventListener('DOMContentLoaded', function () {
    // Fonction pour afficher une page et mettre à jour le menu
    function showPage(pageName) {
      currentPage = pageName;
+     setTimeout(() => {
+      menuLinks.forEach(li => {
+        li.style.display = (li.getAttribute('data-page') === currentPage) ? "none" : "";
+      }); 
+    }, 300);
      pages.forEach(section => {
        section.style.display = section.getAttribute('data-page') === pageName ? 'block' : 'none';
      });
-     // Masque l'item du menu qui correspond à la page courante
-     menuLinks.forEach(li => {
-       li.style.display = (li.getAttribute('data-page') === pageName) ? "none" : "";
-     });
-     // Tu peux aussi gérer la classe active sur les liens si besoin
    }
  
    // Toggle menu on burger click
    burger.addEventListener('click', function () {
-     const isOpen = menu.classList.toggle('open');
-     console.log("Menu ouvert :", isOpen);
-     burger.classList.toggle('open', isOpen);
-     if (isOpen) {
-       // Met à jour la visibilité des items à chaque ouverture
-       menuLinks.forEach(li => {
-         li.style.display = (li.getAttribute('data-page') === currentPage) ? "none" : "";
-       });
-     }
+    burger.classList.toggle('open');
+    menu.classList.toggle('open');
    });
  
    // Navigation : quand on clique sur un lien du menu
@@ -38,9 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
      li.addEventListener('click', function (e) {
        e.preventDefault();
        const page = li.getAttribute('data-page');
-       showPage(page);
        menu.classList.remove('open');
-       burger.classList.remove('active');
+       burger.classList.remove('open');
+       showPage(page);
      });
    });
  
