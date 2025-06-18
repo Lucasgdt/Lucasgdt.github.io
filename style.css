@@ -29,11 +29,11 @@ body {
 /* --- Cadre rectangle animé */
 .frame {
   position: fixed;
-  z-index: 10;
+  z-index: 30;
   left: var(--pad); right: var(--pad);
   top: var(--pad); bottom: var(--pad);
   pointer-events: auto;
-  mix-blend-mode: difference;
+  mix-blend-mode: difference; 
 }
 .frame_line {
   position: absolute;
@@ -70,15 +70,37 @@ body {
   height: 4px;
   background: #fff;
   border-radius: 2px;
-  transition: 
+  transition:
     transform 0.3s cubic-bezier(.76,0,.24,1),
     width 0.3s cubic-bezier(.76,0,.24,1),
     background 0.3s;
+  transform-origin: center; /* optionnel, mais safe */
+}
+
+/* Etat ouvert du burger */
+.burger-btn.open .bar:nth-child(1) {
+  transform: translateY(11px) rotateZ(45deg); 
+  }
+.burger-btn.open .bar:nth-child(2) {
+  transform: translate3d(0px, 0px, 0) scale3d(0.3, 2, 0.3);
+}
+.burger-btn.open .bar:nth-child(3) {
+  transform: translateY(-11px) rotateZ(-45deg);
+}
+
+.burger-btn.open:hover .bar:nth-child(1) {
+  transform: translateY(11px) rotateZ(45deg);
+}
+.burger-btn.open:hover .bar:nth-child(2) {
+  transform: translate3d(0px, 0px, 0) scale3d(0.3, 2, 0.3);
+}
+.burger-btn.open:hover .bar:nth-child(3) {
+  transform: translateY(-11px) rotateZ(-45deg);
 }
 
 /* --- Animation au hover --- */
 .burger-btn:hover .bar:nth-child(1) {
-    transform: translateY(10px) rotate(270deg);
+    transform: translateY(10px) rotate(90deg);
     width: 30px;
 }
 .burger-btn:hover .bar:nth-child(2) {
@@ -89,15 +111,13 @@ body {
     transform: translateY(-12px) rotate(-180deg);
     width: 30px;
 }
-
-*/
 .frame > #burger svg rect { fill: #fff; }
 @media (max-width: 600px) {
   .frame > #burger { right: 0; }
   .siteHeader { left: var(--pad); }
 }
 
-/* --- Header façon Charles, inspiré Keita --- */
+/* --- Header --- */
 .siteHeader {
   position: fixed;
   z-index: 11;
@@ -228,16 +248,17 @@ body {
 .menu {
   position: fixed;
   z-index: 40;
-  top: 0;
-  right: 0;
-  width: 100vw;       /* Prend tout l'écran si tu veux, ou adapte */
-  height: 100vh;
+  top: var(--pad);
+  right: var(--pad);
+  bottom: var(--pad);
+  left: var(--pad);
   display: flex;
-  align-items: center;    /* Centre verticalement */
+  align-items: center;
   justify-content: flex-start;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.4s;
+  transform: translateX(100%);
+  transition: opacity 0.4s, transform 0.4s;
   background: transparent;
 }
 
@@ -245,6 +266,7 @@ body {
 .menu.open {
   opacity: 1;
   pointer-events: auto;
+  transform: translateX(0);
 }
 
 /* List styling */
@@ -277,7 +299,7 @@ body {
     color: var(--c-text, #222);
     text-decoration: none;
     font-size: clamp(2.3rem, 10vw, 7.5rem);
-    font-weight: 900;
+    font-weight: 800;
     letter-spacing: 0.01em;
     line-height: 0.98;
     text-transform: uppercase;
@@ -287,7 +309,6 @@ body {
 }
 
 .menu a:hover {
-  background: var(--accent, #606887);
   color: #fff;
   letter-spacing: 0.08em;
 }
@@ -295,8 +316,9 @@ body {
 @media (max-width: 700px) {
   .menu {
     width: 65vw;
-    right: 6vw;
-    font-size: 1rem;
+    right: calc(var(--pad));
+    left: auto;
+    font-size: 1.5rem;
   }
   .menu a { font-size: 1rem; }
 }
