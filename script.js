@@ -1,38 +1,46 @@
-// Ajoute ce script en bas de ton <body>, ou dans un fichier JS lié
 document.addEventListener('DOMContentLoaded', function () {
-  const menu = document.getElementById('menu-overlay');
-  const burger = document.getElementById('burger');
-  const closeMenu = document.getElementById('close-menu');
-  const menuLinks = menu.querySelectorAll('a[data-page]');
+  const burger = document.querySelector('.burger-btn');
+  const menu = document.getElementById('menu');
+  const menuLinks = menu.querySelectorAll('li');
   const pages = document.querySelectorAll('.page');
 
-  // Ouvre le menu
-  burger.addEventListener('click', function () {
-    menu.classList.add('open');
-  });
+  // Stocke la page courante
+  let currentPage = "home"; // ou la page par défaut
 
-  // Ferme le menu
-  closeMenu.addEventListener('click', function () {
-    menu.classList.remove('open');
-  });
-
-  // Quand on clique sur un lien de menu overlay
-  menuLinks.forEach(link => {
-    link.addEventListener('click', function (e) {
-      e.preventDefault();
-      const page = this.getAttribute('data-page');
-      showPage(page);
-      menu.classList.remove('open');
-    });
-  });
-
+  // Fonction pour afficher une page et mettre à jour le menu
   function showPage(pageName) {
+    currentPage = pageName;
     pages.forEach(section => {
       section.style.display = section.getAttribute('data-page') === pageName ? 'block' : 'none';
     });
-    // Mettre à jour l'état "is-selected" dans le header
-    navLinks.forEach(link => {
-      link.parentElement.classList.toggle('is-selected', link.getAttribute('data-page') === pageName);
+    // Masque l'item du menu qui correspond à la page courante
+    menuLinks.forEach(li => {
+      li.style.display = (li.getAttribute('data-page') === pageName) ? "none" : "";
     });
+    // Tu peux aussi gérer la classe active sur les liens si besoin
   }
+
+  // Toggle menu on burger click
+  burger.addEventListener('click', function () {
+    const isOpen = menu.classList.toggle('open');
+    if (isOpen) {
+      // Met à jour la visibilité des items à chaque ouverture
+      menuLinks.forEach(li => {
+        li.style.display = (li.getAttribute('data-page') === currentPage) ? "none" : "";
+      });
+    }
+  });
+
+  // Navigation : quand on clique sur un lien du menu
+  menuLinks.forEach(li => {
+    li.addEventListener('click', function (e) {
+      e.preventDefault();
+      const page = li.getAttribute('data-page');
+      showPage(page);
+      sideMenu.classList.remove('open');
+    });
+  });
+
+  // Initialisation sur la page par défaut
+  showPage(currentPage);
 });

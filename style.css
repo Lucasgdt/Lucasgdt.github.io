@@ -60,7 +60,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: 7px;
-  z-index: 11;
+  z-index: 41;
   pointer-events: auto;
 }
 
@@ -157,10 +157,8 @@ body {
      min-width: 220px;  /* jamais trop petit */
     height: 60vh;  /* évite de dépasser le cadre */
     padding: 1.2em 1.5em;
-     border-radius: 18px;
-    box-shadow: 0 4px 24px 0 rgba(40,40,50,0.06);
     color: var(--c-text, #222);
-     overflow-y: auto;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -225,67 +223,81 @@ body {
   font-size: 1.3rem;
   margin: 0.5em 0;
 }
-/* --- Overlay menu façon Charles Bruyerre --- */
-.menu-overlay {
+/* --- Side Menu --- */
+
+.menu {
   position: fixed;
-  z-index: 100;
-  inset: 0;
-  background: rgba(34, 34, 34, 0.92);
-  color: #fff;
-  display: none; /* caché par défaut */
-  align-items: center;
-  justify-content: center;
+  z-index: 40;
+  top: 0;
+  right: 0;
+  width: 100vw;       /* Prend tout l'écran si tu veux, ou adapte */
+  height: 100vh;
+  display: flex;
+  align-items: center;    /* Centre verticalement */
+  justify-content: flex-start;
+  pointer-events: none;
+  opacity: 0;
   transition: opacity 0.4s;
+  background: transparent;
 }
 
-.menu-overlay.open {
-  display: flex;
-  animation: fadeIn 0.3s;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-.menu-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2em;
-}
-
-.menu-content nav ol {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5em;
-}
-
-.menu-content nav a {
-  font-size: 2.2rem;
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.2s;
-}
-
-.menu-content nav a:hover {
-  color: var(--accent);
-}
-
-#close-menu {
-  margin-top: 2em;
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 1.5rem;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: opacity 0.2s;
-}
-#close-menu:hover {
+/* Menu ouvert */
+.menu.open {
   opacity: 1;
+  pointer-events: auto;
+}
+
+/* List styling */
+.menu ul {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu li {
+  opacity: 0;
+  transform: translateY(-30px);
+  margin: 0.7em 0;
+  transition:
+    opacity 0.38s cubic-bezier(.6,0,.2,1),
+    transform 0.45s cubic-bezier(.6,0,.2,1);
+  transition-delay: 0s;
+}
+
+/* Animation d'apparition haut vers bas : chaque li a un délai différent */
+.menu.open li {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  filter: blur(0px);
+  clip-path: inset(0 0 0 0);
+  text-align: right;
+}
+.menu a {
+    color: var(--c-text, #222);
+    text-decoration: none;
+    font-size: clamp(2.3rem, 10vw, 7.5rem);
+    font-weight: 900;
+    letter-spacing: 0.01em;
+    line-height: 0.98;
+    text-transform: uppercase;
+    transition: color 0.21s;
+    white-space: pre-line;
+    display: block;
+}
+
+.menu a:hover {
+  background: var(--accent, #606887);
+  color: #fff;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 700px) {
+  .menu {
+    width: 65vw;
+    right: 6vw;
+    font-size: 1rem;
+  }
+  .menu a { font-size: 1rem; }
 }
 

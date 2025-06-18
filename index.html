@@ -27,14 +27,21 @@
         <span class="bar"></span>
     </button>
 
-    <!-- Pages, une seule visible à la fois -->
+
+
+  </div>
+  <!-- ... -->
+<header class="siteHeader">
+  <h1 class="siteHeader_title">Ton Nom</h1>
+  <p class="siteHeader_label">Designer & Développeur</p>
+</header>
+
+<!-- Pages, une seule visible à la fois -->
     <main class="content">
         <section class="page" data-page="home" style="display: block;">
             <div class="page_content home">
-                <p class="home_aboutme">
-                <span>Bienvenue sur mon portfolio</span>
-                <span>Je suis designer & développeur</span>
-                <span>J’aime créer des expériences web uniques</span>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>
             </div>
         </section>
@@ -46,27 +53,16 @@
         <!-- Ajoute ici les autres pages -->
   </main>
 
-  </div>
-  <!-- ... -->
-<header class="siteHeader">
-  <h1 class="siteHeader_title">Ton Nom</h1>
-  <p class="siteHeader_label">Designer & Développeur</p>
-</header>
-
 <!-- Menu overlay -->
-<div id="menu-overlay" class="menu-overlay">
-  <div class="menu-content">
-    <nav>
-      <ol>
-        <li><a href="/" data-page="home">Home</a></li>
-        <li><a href="/about" data-page="about">À propos</a></li>
-        <li><a href="/projects" data-page="projects">Projets</a></li>
-        <li><a href="/contact" data-page="contact">Contact</a></li>
-      </ol>
+    <nav class="menu" id="menu">
+        <ul>
+            <li data-page="home"><a href="/">ACCUEIL</a></li>
+            <li data-page="about"><a href="/about">À PROPOS</a></li>
+            <li data-page="projects"><a href="/projects">PROJETS</a></li>
+            <li data-page="contact"><a href="/contact">CONTACT</a></li>
+        </ul>
     </nav>
-    <button id="close-menu" aria-label="Fermer le menu">Fermer ✕</button>
-  </div>
-</div>
+
 
 </body>
 </html>
