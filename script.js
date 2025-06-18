@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Toggle menu on burger click
   burger.addEventListener('click', function () {
     const isOpen = menu.classList.toggle('open');
+    burger.classList.toggle('open', isOpen);
     if (isOpen) {
       // Met à jour la visibilité des items à chaque ouverture
       menuLinks.forEach(li => {
@@ -37,7 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
       const page = li.getAttribute('data-page');
       showPage(page);
-      sideMenu.classList.remove('open');
+      menu.classList.remove('open');
+      burger.classList.remove('open');
     });
   });
 
