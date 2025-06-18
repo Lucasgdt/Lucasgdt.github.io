@@ -16,14 +16,18 @@ body {
 }
 #Background {
   position: fixed;
-  z-index: 1;
+  z-index: 0;
   left: 0; top: 0; right: 0; bottom: 0;
   overflow: hidden;
   pointer-events: none;
 }
 #bg-canvas {
-  width: 100vw; height: 100vh; display: block;
-  background: transparent;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  position: absolute;
+  top: 0; left: 0;
+  pointer-events: none;
 }
 
 /* --- Cadre rectangle animé */
@@ -278,16 +282,6 @@ body {
   height: var(--pad) + 0.3em; /* Hauteur de chaque ligne */
   margin: 0.3em 0;
 }
-.menu li.hidden-category a {
-  height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  pointer-events: none;
-  opacity: 0;
-  transition: height 0.3s, opacity 0.2s;
-}
-
 
 .menu a {
     color: var(--c-text);
