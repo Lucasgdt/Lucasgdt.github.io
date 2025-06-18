@@ -1,47 +1,100 @@
-document.addEventListener('DOMContentLoaded', () => {
-// Canvas setup
 const canvas = document.getElementById('bg-canvas');
-
-// Scene setup
 const scene = new THREE.Scene();
-// Camera setup
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-// Renderer setup
-const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+const camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 1000);
+camera.position.z = 70;
+
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setClearColor(getComputedStyle(document.documentElement).getPropertyValue('--c-bg'), 1);
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor(0x191a22, 1);
 
-// exemple
-const geometry = new THREE.SphereGeometry(1, 16, 16        );
+// Params
+const cubeCount = 90;
+const boxSize = 2.8;
+const area = 50;
+let cubes = [];
 
-const material = new THREE.MeshBasicMaterial({ color: 0xa8a8a8, wireframe: true });
+// Lights
+scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+dirLight.position.set(20, 30, 100);
+scene.add(dirLight);
 
-const sphere = new THREE.Mesh(geometry, material);
+// Create cubes at random positions
+for (let i = 0; i < cubeCount; i++) {
+  const geometry = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
+  const material = new THREE.MeshStandardMaterial({
+    color: 0xffffff,
+    roughness: 0.55,
+    metalness: 0.7,
+    transparent: true,
+    opacity: gsap.utils.random(0.4, 1)
+  });
+  const cube = new THREE.Mesh(geometry, material);
 
-scene.add(sphere);
+  // Position de départ aléatoire
+  cube.position.x = gsap.utils.random(-area, area);
+  cube.position.y = gsap.utils.random(-area, area);
+  cube.position.z = gsap.utils.random(-area, area);
 
-// light setup
-const light = new THREE.AmbientLight(0xdd9090, 10); // Soft white light
-light.position.set(2, 2, 4);
-scene.add(light);
+  scene.add(cube);
+  cubes.push(cube);
+}
 
-camera.position.z = 4;
+// Fonction d'animation yoyo infini
+function floatCubeYoyo(cube) {
+  // Définir une destination aléatoire
+  const to = {
+    x: gsap.utils.random(-area, area),
+    y: gsap.utils.random(-area, area),
+    z: gsap.utils.random(-area, area)
+  };
+  gsap.to(cube.position, {
+    ...to,
+    duration: gsap.utils.random(5, 10),
+    ease: "sine.inOut",
+    yoyo: true,
+    repeat: -1 // Yoyo infini !
+  });
+  gsap.to(cube.rotation, {
+    x: gsap.utils.random(-2, 2),
+    y: gsap.utils.random(-2, 2),
+    duration: gsap.utils.random(4, 8),
+    ease: "sine.inOut",
+    yoyo: true,
+    repeat: -1
+  });
+  gsap.to(cube.material, {
+    opacity: gsap.utils.random(0.5, 1),
+    duration: gsap.utils.random(6, 12),
+    yoyo: true,
+    repeat: -1,
+    ease: "sine.inOut"
+  });
+}
 
-// Animation loop
+// Lance l'animation pour chaque cube
+cubes.forEach(floatCubeYoyo);
+
+// Optionnel : rotation lente du nuage
+gsap.to(scene.rotation, {
+  y: "+=6.2831", // 2*PI
+  x: "+=3.14",
+  duration: 65,
+  ease: "none",
+  repeat: -1
+});
+
+// Responsive
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// Render loop
 function animate() {
-    requestAnimationFrame(animate);
-    sphere.rotation.x += 0.0001;
-    sphere.rotation.y += 0.0001;
-    renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
 }
 animate();
-
-// Responsive resize
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
-  console.log("Three.js is running!");
-});

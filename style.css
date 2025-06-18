@@ -1,6 +1,6 @@
 /* --- Base couleurs et font --- */
 :root {
-  --c-bg: #000000;
+  --c-bg: #161616;
   --c-text: #ffffff;
   --pad: 40px;
   --accent: #a8a8a8;
@@ -17,9 +17,13 @@ body {
 #Background {
   position: fixed;
   z-index: 0;
-  left: 0; top: 0; right: 0; bottom: 0;
-  overflow: hidden;
-  pointer-events: none;
+  left: var(--pad);
+  top: var(--pad);
+  right: var(--pad);
+  bottom: var(--pad);
+  overflow: hidden;         /* LE MASQUAGE */
+  pointer-events: none;     /* Laisse cliquer à travers */
+  background: var(--c-bg);
 }
 #bg-canvas {
   width: 100vw;
@@ -175,19 +179,19 @@ body {
 .content {
      position: fixed;
      z-index: 20;
-    left: calc(var(--pad) + 10px);
-    bottom: calc(var(--pad) + 10px);
-    max-width: 40vw;   /* large sur desktop */
+      left: calc(var(--pad) + 10px);
+      bottom: calc(var(--pad) + 10px);
+      max-width: 40vw;   /* large sur desktop */
      min-width: 220px;  /* jamais trop petit */
-    height: 60vh;  /* évite de dépasser le cadre */
-    padding: 1.2em 1.5em;
-    color: var(--c-text, #222);
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 0.7em;
-    transition: max-width 0.2s, max-height 0.2s;
+      height: 60vh;  /* évite de dépasser le cadre */
+      padding: 1.2em 1.5em;
+      color: var(--c-text, #222);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 0.7em;
+      transition: max-width 0.2s, max-height 0.2s;
 }
 
 .page_content.home {
@@ -213,16 +217,16 @@ body {
 
 @media (max-width: 600px) {
   .content {
-    left: 5vw;
-    bottom: 5vw;
-    max-width: 90vw;
+    left: var(--pad);
+    bottom: var(--pad);
+    max-width: 40;
     min-width: 90vw;
-    max-height: 40vh;
-    font-size: 0.99rem;
+    max-height: 60vh;
+    font-size: 0.80rem;
     padding: 0.95em;
     border-radius: 12px;
   }
-  .page_content.home h2 { font-size: 1.1rem; }
+  .page_content.home h2 { font-size: 1rem; }
 }
 
 /* Optionnel : pour éviter que le contenu sorte du cadre si la fenêtre est trop petite */
@@ -318,9 +322,13 @@ body {
   .menu {
     width: 65vw;
     right: calc(var(--pad));
+    top: calc(var(--pad));
     left: auto;
     font-size: 1.5rem;
   }
-  .menu a { font-size: 1rem; }
+  .menu a {
+    font-size: 1rem;
+    transform: translateY(-140%);
+  }
 }
 
