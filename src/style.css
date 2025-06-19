@@ -8,6 +8,7 @@
   --accent: #a8a8a8;
   --fs-title: 2.5rem;
 }
+
 body {
   margin: 0;
   padding: 0;
@@ -19,19 +20,29 @@ body {
 
 #EnterView {
   position: fixed;
-  inset: 0;                   /* top:0; right:0; bottom:0; left:0 */
+  inset: 0;
   background: var(--c-bg);
   display: flex;
-  flex-direction: column;
+  flex-direction: line;
   justify-content: center;
   align-items: center;
-  z-index: 999;               /* au-dessus de tout */
+  z-index: 999;
   pointer-events: none;
   overflow: hidden;
+  gap : 1em;
 }
 
-.text {
+.text1 {
   font-size: 1.5rem;
+  font-weight: 100;
+  color: white;
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+.text2 {
+  font-size: 1.5rem;
+  font-weight: 1000;
   color: white;
   opacity: 1;
   transition: opacity 0.8s ease;
@@ -220,18 +231,23 @@ body {
     position: fixed;
     z-index: 20;
     left: calc(var(--pad) + 10px);
-      bottom: calc(var(--pad) + 10px);
-      max-width: 40vw;   /* large sur desktop */
-     min-width: 220px;  /* jamais trop petit */
-      height: 60vh;  /* évite de dépasser le cadre */
-      padding: 1.2em 1.5em;
-      color: var(--c-text, #222);
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      gap: 0.7em;
-      transition: max-width 0.2s, max-height 0.2s;
+    bottom: calc(var(--pad) + 10px);
+    max-width: 40vw;   /* large sur desktop */
+    min-width: 220px;  /* jamais trop petit */
+    height: 40vh;  /* évite de dépasser le cadre */
+    padding: 1.2em 1.5em;
+    color: var(--c-text, --c-bg);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.7em;
+    transition: max-width 0.2s, max-height 0.2s;
+    scrollbar-width: none;        /* Firefox */
+    -ms-overflow-style: none;     /* IE 10+ */
+    }
+    .content::-webkit-scrollbar {
+    display: none;              /* Chrome, Safari, Opera */
 }
 
 .page_content.home {
@@ -253,7 +269,36 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+}
+
+.page_content.projects ul {
+  width: 100%;
+  text-align: left; /* Aligne le contenu à gauche */
+  padding-left: 0px; /* Ajuste le décalage si besoin */
+  list-style: none;
+}
+
+.page_content.projects li {
+  height: var(--pad); /* Hauteur de chaque ligne */
+  margin: 4em 0;
+}
+
+.page_content.projects a {
+    color: var(--c-text);
+    position: relative;
+    text-decoration: none;
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    line-height: 0.98;
+    text-transform: uppercase;
+    white-space: pre-line;
+    display: inline-block;
+}
+
+.page_content.projects a:hover {
+  letter-spacing: 0.05em;
+  transform: skewX(-10deg);
 }
 
 /* RESPONSIVE : Tablette et mobile */
