@@ -4,7 +4,7 @@
 :root {
   --c-bg: #161616;
   --c-text: #ffffff;
-  --pad: 40px;
+  --pad: 2%;
   --accent: #a8a8a8;
   --fs-title: 2.5rem;
 }
@@ -88,6 +88,7 @@ body {
 .frame_line-right  { right: 0; top: 0; width: 1px; height: 100%; }
 .frame_line-top    { left: 0; top: 0; width: 100%; height: 1px; }
 .frame_line-bottom { left: 0; bottom: 0; width: 100%; height: 1px; }
+
 
 .burger-btn {
   width: 40px;
@@ -229,28 +230,31 @@ body {
 /* --- Pages --- */
 .content {
     position: fixed;
+    overflow: visible;
     z-index: 20;
     left: calc(var(--pad) + 10px);
     bottom: calc(var(--pad) + 10px);
-    max-width: 40vw;   /* large sur desktop */
+    max-width: 50%;   /* large sur desktop */
     min-width: 220px;  /* jamais trop petit */
-    height: 40vh;  /* évite de dépasser le cadre */
-    padding: 1.2em 1.5em;
+    height: 40em;  /* évite de dépasser le cadre */
     color: var(--c-text, --c-bg);
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    overflow-y: auto; 
     gap: 0.7em;
     transition: max-width 0.2s, max-height 0.2s;
+    padding-right: 7em; /* Ajuste selon le scale/translate */
     scrollbar-width: none;        /* Firefox */
     -ms-overflow-style: none;     /* IE 10+ */
+    justify-content: flex-end;
     }
     .content::-webkit-scrollbar {
     display: none;              /* Chrome, Safari, Opera */
 }
 
+
 .page_content.home {
+    min-height: 100%;
     width: 100%;
     height: 100%;
     display: flex;
@@ -260,6 +264,7 @@ body {
 .page_content.about {
     width: 100%;
     height: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -269,36 +274,70 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
+
 }
 
 .page_content.projects ul {
   width: 100%;
   text-align: left; /* Aligne le contenu à gauche */
   padding-left: 0px; /* Ajuste le décalage si besoin */
-  list-style: none;
+  list-style: none; 
 }
 
 .page_content.projects li {
-  height: var(--pad); /* Hauteur de chaque ligne */
+  height: auto; /* Hauteur de chaque ligne */
   margin: 4em 0;
 }
 
 .page_content.projects a {
     color: var(--c-text);
-    position: relative;
     text-decoration: none;
     font-size: 3rem;
     font-weight: 800;
     letter-spacing: 0.01em;
-    line-height: 0.98;
     text-transform: uppercase;
     white-space: pre-line;
     display: inline-block;
+    transition: transform 0.3s cubic-bezier(.7,0,.25,1);
 }
 
 .page_content.projects a:hover {
-  letter-spacing: 0.05em;
-  transform: skewX(-10deg);
+
+  transform: scale(1.1)skewX(-10deg) translateX(10%);
+}
+
+.page_content.projects a:hover + p {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+.page_content.projects p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--accent);
+  margin: 0.1em 0;
+  transition: transform 0.3s cubic-bezier(.7,0,.25,1), opacity 0.3s;
+}
+
+.page_content.contact {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.page_content.contact a {
+  text-decoration: solid underline;
+  color: var(--c-text);
+  transition: color 0.3s;
+}
+
+.page_content.contact a:hover {
+  text-decoration: none;
+  color: var(--accent);
 }
 
 /* RESPONSIVE : Tablette et mobile */
@@ -310,15 +349,21 @@ body {
     font-size: 0.90rem;
     padding: 1em;
   }
+  .page_content.projects a {
+    font-size: 2rem;
+  }
 }
 
 @media (max-width: 600px) {
   .content {
     max-width: 30vw;
     min-width: 150px;
-    max-height: 38vh;
+    max-height: 80vh;
     font-size: 0.70rem;
     padding: 1em;
+  }
+  .page_content.projects a {
+    font-size: 1rem;
   }
 }
 
@@ -329,15 +374,11 @@ body {
   }
 }
 
+
 .page {
   display: none;
   width: 100%;
-  min-height: 50vh;
-  align-items: center; justify-content: center;
   text-align: left;
-}
-.page[data-page="home"] {
-  display: block;
 }
 /* --- Side Menu --- */
 
@@ -430,7 +471,7 @@ body {
   }
   .menu a {
     font-size: 1rem;
-    transform: translateY(-140%);
+    transform: translateY(-170%);
   }
 }
 
