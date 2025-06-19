@@ -1,13 +1,98 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mon Portfolio</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- Fonts personnalisées à ajouter ici si tu veux -->
+  <link rel="stylesheet" href="src/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Radley:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+  <!-- Enter View overlay -->
+  <div id="EnterView">
+    <div class="text1">Goudet Lucas</div>
+    <div class="text2">Portfolio</div>
+  </div>
+
+  <!-- Canvas animé en fond -->
+  <div id="Background">
+    <canvas id="bg-canvas"></canvas>
+  </div>
+
+  <!-- Rectangle cadre -->
+  <div class="frame">
+    <div class="frame_line frame_line-left"></div>
+    <div class="frame_line frame_line-right"></div>
+    <div class="frame_line frame_line-top"></div>
+    <div class="frame_line frame_line-bottom"></div>
+    <!-- Ajoute un bouton hamburger -->
+    <button id="burger" aria-label="Ouvrir le menu" class="burger-btn">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </button>
+  <!-- Menu Side -->
+    <nav class="menu" id="menu">
+        <ul>
+            <li data-page="home"><a href="/">ACCUEIL</a></li>
+            <li data-page="about"><a href="/about">À PROPOS</a></li>
+            <li data-page="projects"><a href="/projects">PROJETS</a></li>
+            <li data-page="contact"><a href="/contact">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <!-- Pages, une seule visible à la fois -->
+    <main class="content">
+        <section class="page" data-page="home" style="display: block;">
+            <div class="page_content home">
+                <p>
+                    Bienvenue sur mon portfolio ! Je suis Goudet Lucas, un développeur fullstack passionné par la création d'applications web et logiciels. Découvrez mes projets et n'hésitez pas à me contacter pour toute collaboration ou question.
+                </p>
+            </div>
+        </section>
+        <section class="page" data-page="about" style="display: none;">
+            <div class="page_content about">
+                <p>Étudiant en Master Expert en Informatique et Système d'Information, je suis passionné par le développement web et les nouvelles technologies. J'aime créer des applications innovantes et résoudre des problèmes complexes.</p>
+            </div>
+        </section>
+        <section class="page" data-page="projects" style="display:none;">
+          <div class="page_content projects">
+            <ul>
+                <li><a href="https://github.com/TomMarsura/feason" target="_blank">Feason</a><p>Développeur Fullstack React</p></li>
+                <li><a href="https://github.com/GL2-GR5/kakuro" target="_blank">Kakuro</a><p>Développeur Java/JavaFX</p></li>
+                <li><a href="https://github.com/Lucasgdt/DARICKVSTHEWORLD" target="_blank">Darick vs The World</a><p>Développeur C</p></li>
+            </ul>
+          </div>
+        </section>
+        <section class="page" data-page="contact" style="display:none;">
+          <div class="page_content contact">
+            <p>Email : <a href="mailto:lucas.goudet@gmail.com">lucas.goudet@gmail.com</a></p>
+            <p>Reseaux : <a href="https://www.linkedin.com/in/lucasgoudet" target="_blank">Linkedin</a> / <a href="https://github.com/Lucasgdt" target="_blank">Github</a></p>
+        <!-- Ajoute ici les autres pages -->
+          </div>
+        </section>
+  </main>
+
+
+  </div>
+  <!-- ... -->
+<header class="siteHeader">
+  <h1 class="siteHeader_title">Goudet Lucas</h1>
+  <p class="siteHeader_label">Développeur Fullstack & Java</p>
+</header>
+
+<!-- Menu JS -->
+<script src="src/menu.js"></script>
+
+<!-- Librairies externes -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
+
+<!-- Animation canvas et Enter View -->
+<script src="src/enteview.js"></script>
+<script src="src/canvas.js"></script>
+</body>
 </html>
