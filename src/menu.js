@@ -6,6 +6,19 @@ document.addEventListener('DOMContentLoaded', function () {
  
    // Stocke la page courante
    let currentPage = "home"; // ou la page par défaut
+
+  function animateIn(element, duration = 400) {
+    element.style.display = 'block';
+    element.style.transform = 'translateX(100px)';
+    element.style.filter = 'blur(4px)';
+    element.style.transition = 'none'; // reset
+    element.offsetHeight; // force repaint
+
+    element.style.transition = `transform ${duration}ms ease, filter ${duration}ms ease`;
+    element.style.transform = 'translateX(0)';
+    element.style.filter = 'blur(0px)';
+  }
+
  
    // Fonction pour afficher une page et mettre à jour le menu
    function showPage(pageName) {
@@ -16,7 +29,13 @@ document.addEventListener('DOMContentLoaded', function () {
       }); 
     }, 300);
      pages.forEach(section => {
-       section.style.display = section.getAttribute('data-page') === pageName ? 'block' : 'none';
+       const isCurrent = section.getAttribute('data-page') === pageName;
+        if (isCurrent) {
+          animateIn(section, 400);
+        } else {
+          section.style.display = 'none'; // Cache les sections non actives
+
+        }
      });
    }
  
