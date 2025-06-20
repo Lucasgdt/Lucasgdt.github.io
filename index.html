@@ -1,40 +1,39 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <title>Goudet Lucas</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <!-- Fonts personnalisées à ajouter ici si tu veux -->
+  <!-- Feuilles de style et polices -->
   <link rel="stylesheet" href="src/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Radley:ital@0;1&display=swap" rel="stylesheet">
 </head>
 <body>
   
-  <!-- Enter View overlay -->
+  <!-- Overlay d'entrée (animation d'accueil) -->
   <div id="EnterView">
     <div class="text1">Goudet Lucas</div>
     <div class="text2">Portfolio</div>
   </div>
 
-  <!-- Canvas animé en fond -->
+  <!-- Fond animé avec canvas -->
   <div id="Background">
     <canvas id="bg-canvas"></canvas>
   </div>
 
-  <!-- Rectangle cadre -->
+  <!-- Cadre principal avec menu burger et navigation latérale -->
   <div class="frame">
     <div class="frame_line frame_line-left"></div>
     <div class="frame_line frame_line-right"></div>
     <div class="frame_line frame_line-top"></div>
     <div class="frame_line frame_line-bottom"></div>
-    <!-- Ajoute un bouton hamburger -->
+    <!-- Bouton burger pour ouvrir le menu latéral -->
     <button id="burger" aria-label="Ouvrir le menu" class="burger-btn">
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
     </button>
-  <!-- Menu Side -->
+    <!-- Menu latéral de navigation -->
     <nav class="menu" id="menu">
         <ul>
             <li data-page="home"><a href="/">ACCUEIL</a></li>
@@ -44,8 +43,9 @@
         </ul>
     </nav>
 
-    <!-- Pages, une seule visible à la fois -->
+    <!-- Contenu principal des pages -->
     <main class="content">
+        <!-- Page d'accueil -->
         <section class="page" data-page="home" style="display: block;">
             <div class="page_content home">
                 <p>
@@ -53,11 +53,13 @@
                 </p>
             </div>
         </section>
+        <!-- Page À propos -->
         <section class="page" data-page="about" style="display: none;">
             <div class="page_content about">
                 <p>Étudiant en Master Expert en Informatique et Système d'Information, je suis passionné par le développement web et les nouvelles technologies. J'aime créer des applications innovantes et résoudre des problèmes complexes.</p>
             </div>
         </section>
+        <!-- Page Projets -->
         <section class="page" data-page="projects" style="display:none;">
           <div class="page_content projects">
             <ul>
@@ -67,25 +69,22 @@
             </ul>
           </div>
         </section>
+        <!-- Page Contact -->
         <section class="page" data-page="contact" style="display:none;">
           <div class="page_content contact">
             <p>Email : <a href="mailto:lucas.goudet@gmail.com">lucas.goudet@gmail.com</a></p>
             <p>Reseaux : <a href="https://www.linkedin.com/in/lucasgoudet" target="_blank">Linkedin</a> / <a href="https://github.com/Lucasgdt" target="_blank">Github</a></p>
-        <!-- Ajoute ici les autres pages -->
           </div>
         </section>
-  </main>
-
-
+    </main>
   </div>
-  <!-- ... -->
-<header class="siteHeader">
-  <h1 class="siteHeader_title">Goudet Lucas</h1>
-  <p class="siteHeader_label">Développeur Fullstack & Java</p>
-</header>
 
-<!-- Menu JS -->
-<script src="src/menu.js"></script>
+  <!-- En-tête du site -->
+  <header class="siteHeader">
+    <h1 class="siteHeader_title">Goudet Lucas</h1>
+    <p class="siteHeader_label">Développeur Fullstack & Java</p>
+  </header>
+
 
 <!-- Librairies externes -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
@@ -95,5 +94,6 @@
 
 <!-- Animation canvas et Enter View -->
 <script type="module" src="src/main.js"></script>
+
 </body>
 </html>

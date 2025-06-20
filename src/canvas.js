@@ -1,7 +1,10 @@
+
 export function canvas(benchmarkfps = 60) {
+
   const canvas = document.getElementById('bg-canvas');
   canvas.style.opacity = 0;
   const scene = new THREE.Scene();
+
 
   const quality = benchmarkfps >= 80 ? 'high' :
                   benchmarkfps >= 50 ? 'medium' : 'low';
@@ -14,6 +17,7 @@ export function canvas(benchmarkfps = 60) {
   );
   camera.position.z = 60;
 
+  // Renderer WebGL avec fond transparent
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setClearColor(
     getComputedStyle(document.documentElement).getPropertyValue('--c-bg'),
@@ -28,17 +32,18 @@ export function canvas(benchmarkfps = 60) {
     case 'medium': cubeCount = 70; break;
     case 'low': cubeCount = 35; break;
   }
+
   const boxSize = 2.8;
   const area = 50;
   let cubes = [];
 
-  // Lights
+  // Lumières de la scène
   scene.add(new THREE.AmbientLight(0xffffff, 0.85));
   const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
   dirLight.position.set(20, 30, 100);
   scene.add(dirLight);
 
-  // Create cubes at random positions
+  // Création des cubes à des positions aléatoires
   for (let i = 0; i < cubeCount; i++) {
     const geometry = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
     const material = new THREE.MeshStandardMaterial({
@@ -46,11 +51,11 @@ export function canvas(benchmarkfps = 60) {
       roughness: 0.55,
       metalness: 0.7,
       transparent: true,
-      opacity: gsap.utils.random(0.4, 1)
+      opacity: gsap.utils.random(0.1, 0.6)
     });
     const cube = new THREE.Mesh(geometry, material);
 
-    // Position de départ aléatoire
+    // Position initiale aléatoire
     cube.position.x = gsap.utils.random(-area, area);
     cube.position.y = gsap.utils.random(-area, area);
     cube.position.z = gsap.utils.random(-area, area);
@@ -67,8 +72,8 @@ export function canvas(benchmarkfps = 60) {
   });
 
   // Fonction d'animation yoyo infini
+
   function floatCubeYoyo(cube) {
-    // Définir une destination aléatoire
     const to = {
       x: gsap.utils.random(-area, area),
       y: gsap.utils.random(-area, area),
@@ -79,7 +84,7 @@ export function canvas(benchmarkfps = 60) {
       duration: gsap.utils.random(5, 10),
       ease: "sine.inOut",
       yoyo: true,
-      repeat: -1 // Yoyo infini !
+      repeat: -1
     });
     gsap.to(cube.rotation, {
       x: gsap.utils.random(-2, 2),
@@ -90,7 +95,7 @@ export function canvas(benchmarkfps = 60) {
       repeat: -1
     });
     gsap.to(cube.material, {
-      opacity: gsap.utils.random(0.3, 0.6),
+      opacity: gsap.utils.random(0.1, 0.6),
       duration: gsap.utils.random(6, 12),
       yoyo: true,
       repeat: -1,
@@ -101,16 +106,18 @@ export function canvas(benchmarkfps = 60) {
   // Lance l'animation pour chaque cube
   cubes.forEach(floatCubeYoyo);
 
-  // Optionnel : rotation lente du nuage
+  // Animation de rotation lente du nuage de cubes
   gsap.to(scene.rotation, {
     y: "+=6.2831", // 2*PI
+
     x: "+=6.2831", // 2*PI
     duration: 65,
+
     ease: "none",
     repeat: -1
   });
 
-  // Responsive
+  // Ajuste la taille du rendu lors du redimensionnement de la fenêtre
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -118,7 +125,9 @@ export function canvas(benchmarkfps = 60) {
   });
 
 
+
   // Render loop
+
   function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
