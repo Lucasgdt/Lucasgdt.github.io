@@ -1,14 +1,9 @@
-
-export function canvas(benchmarkfps = 60) {
-
+document.addEventListener('DOMContentLoaded', () => {
+  // Récupère le canvas et initialise la scène Three.js
   const canvas = document.getElementById('bg-canvas');
-  canvas.style.opacity = 0;
   const scene = new THREE.Scene();
 
-
-  const quality = benchmarkfps >= 80 ? 'high' :
-                  benchmarkfps >= 50 ? 'medium' : 'low';
-
+  // Caméra perspective
   const camera = new THREE.PerspectiveCamera(
     70,
     window.innerWidth / window.innerHeight,
@@ -25,14 +20,8 @@ export function canvas(benchmarkfps = 60) {
   );
   renderer.setSize(window.innerWidth, window.innerHeight);
 
-  // Params
-  let cubeCount;
-  switch (quality) {
-    case 'high': cubeCount = 120; break;
-    case 'medium': cubeCount = 70; break;
-    case 'low': cubeCount = 35; break;
-  }
-
+  // Paramètres des cubes
+  const cubeCount = 90;
   const boxSize = 2.8;
   const area = 50;
   let cubes = [];
@@ -64,15 +53,7 @@ export function canvas(benchmarkfps = 60) {
     cubes.push(cube);
   }
 
-  gsap.to("#bg-canvas", {
-  opacity: 1,
-  duration: 1.5,
-  ease: "power2.out",
-  delay: 0
-  });
-
-  // Fonction d'animation yoyo infini
-
+  // Animation yoyo infinie pour chaque cube (position, rotation, opacité)
   function floatCubeYoyo(cube) {
     const to = {
       x: gsap.utils.random(-area, area),
@@ -109,10 +90,8 @@ export function canvas(benchmarkfps = 60) {
   // Animation de rotation lente du nuage de cubes
   gsap.to(scene.rotation, {
     y: "+=6.2831", // 2*PI
-
-    x: "+=6.2831", // 2*PI
-    duration: 65,
-
+    x: "+=6.2831",
+    duration: 60,
     ease: "none",
     repeat: -1
   });
@@ -124,13 +103,10 @@ export function canvas(benchmarkfps = 60) {
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
-
-
-  // Render loop
-
+  // Boucle de rendu
   function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
   }
   animate();
-};
+});
