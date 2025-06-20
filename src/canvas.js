@@ -1,6 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
+export function canvas(benchmarkfps = 60) {
   const canvas = document.getElementById('bg-canvas');
+  canvas.style.opacity = 0;
   const scene = new THREE.Scene();
+
+  const quality = benchmarkfps >= 80 ? 'high' :
+                  benchmarkfps >= 50 ? 'medium' : 'low';
 
   const camera = new THREE.PerspectiveCamera(
     70,
@@ -18,7 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   // Params
-  const cubeCount = 90;
+  let cubeCount;
+  switch (quality) {
+    case 'high': cubeCount = 120; break;
+    case 'medium': cubeCount = 70; break;
+    case 'low': cubeCount = 35; break;
+  }
   const boxSize = 2.8;
   const area = 50;
   let cubes = [];
@@ -49,6 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
     scene.add(cube);
     cubes.push(cube);
   }
+
+  gsap.to("#bg-canvas", {
+  opacity: 1,
+  duration: 1.5,
+  ease: "power2.out",
+  delay: 0
+  });
 
   // Fonction d'animation yoyo infini
   function floatCubeYoyo(cube) {
@@ -88,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Optionnel : rotation lente du nuage
   gsap.to(scene.rotation, {
     y: "+=6.2831", // 2*PI
-    x: "+=3.14",
+    x: "+=6.2831", // 2*PI
     duration: 65,
     ease: "none",
     repeat: -1
@@ -101,10 +117,11 @@ document.addEventListener('DOMContentLoaded', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
+
   // Render loop
   function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
   }
   animate();
-});
+};
